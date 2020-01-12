@@ -122,7 +122,7 @@ func performSort(targetAddr net.IPAddr, toSort []int) ([]int, int) {
 
 	go listenAndSort(conn, len(toSort), sortedChan)
 	for _, val := range toSort {
-		go sendPing(targetAddr, val, conn)
+		go sendPing(targetAddr, val)
 	}
 
 	sorted := []int{}
@@ -195,7 +195,7 @@ func listenAndSort(conn *ipv4.PacketConn, numExpected int, replyChan chan echoRe
 	}
 }
 
-func sendPing(dst net.IPAddr, ttl int, conn *ipv4.PacketConn) {
+func sendPing(dst net.IPAddr, ttl int) {
 	newConn := newEchoConn()
 	defer newConn.Close()
 
